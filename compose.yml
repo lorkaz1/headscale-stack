@@ -1,6 +1,6 @@
 services:
   headscale:
-    image: image: docker.io/headscale/headscale:latest
+    image: docker.io/headscale/headscale:latest
     container_name: headscale
     restart: unless-stopped
 
