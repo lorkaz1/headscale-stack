@@ -3,38 +3,12 @@ services:
     image: headscale/headscale:latest
     container_name: headscale
     restart: unless-stopped
+
     command: serve
 
-    environment:
-      TZ: ${TZ}
-
     volumes:
-      - ${DATA_PATH}/headscale:/var/lib/headscale
-      - ./config.yaml:/etc/headscale/config.yaml:ro
-
-    expose:
-      - "8080"
-
-    networks:
-      - headscale
-
-  headplane:
-    image: ghcr.io/tale/headplane:latest
-    container_name: headplane
-    restart: unless-stopped
-
-    environment:
-      TZ: ${TZ}
-      HEADSCALE_URL: http://headscale:8080
-
-    volumes:
-      - ${DATA_PATH}/headplane:/data
-
-    expose:
-      - "3000"
-
-    depends_on:
-      - headscale
+      - ./config/config.yaml:/etc/headscale/config.yaml:ro
+      - ./data:/var/lib/headscale
 
     networks:
       - headscale
@@ -48,20 +22,17 @@ services:
       - "80:80"
       - "443:443"
 
-    environment:
-      TZ: ${TZ}
-
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - ${DATA_PATH}/caddy/data:/data
-      - ${DATA_PATH}/caddy/config:/config
-
-    depends_on:
-      - headscale
+      - caddy_data:/data
+      - caddy_config:/config
 
     networks:
       - headscale
 
 networks:
   headscale:
-    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:
