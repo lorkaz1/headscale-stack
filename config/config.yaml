@@ -17,10 +17,6 @@ derp:
   server:
     enabled: false
 
-dns:
-  magic_dns: false
-  base_domain: tailnet.home
-
 log:
   format: text
   level: info
