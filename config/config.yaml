@@ -18,7 +18,7 @@ derp:
     enabled: false
 
 dns:
-  magic_dns: true
+  magic_dns: false
   base_domain: tailnet.home
 
 log:
